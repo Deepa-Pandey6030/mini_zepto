@@ -1,19 +1,17 @@
 // src/components/Header.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useCart } from '../contexts/CartContext'; // Import useCart to get cart item count
+import { useCart } from '../contexts/CartContext';
 
 function Header() {
-  const { getTotalItems } = useCart(); // Get the total number of items in the cart
+  const { getTotalItems } = useCart();
 
   return (
     <header className="bg-white shadow-md py-4 px-6 flex flex-col md:flex-row justify-between items-center sticky top-0 z-50 rounded-b-lg">
-      {/* Logo and App Name */}
       <Link to="/" className="text-3xl font-bold text-primary mb-4 md:mb-0">
         JHUPTO
       </Link>
 
-      {/* Navigation Links */}
       <nav className="w-full md:w-auto">
         <ul className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2 text-lg">
           <li>
@@ -41,12 +39,12 @@ function Header() {
               Feedback
             </Link>
           </li>
+          {/* Removed the Ingredient Chat link here */}
           <li>
             <Link to="/login" className="text-gray-700 hover:text-primary transition-colors duration-200 ease-in-out">
               Login
             </Link>
           </li>
-          {/* Cart Icon with Item Count */}
           <li>
             <Link to="/cart" className="relative text-gray-700 hover:text-primary transition-colors duration-200 ease-in-out">
               <svg

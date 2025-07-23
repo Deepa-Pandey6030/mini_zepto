@@ -1,17 +1,16 @@
 // src/components/VoiceAssistant.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { useCart } from '../contexts/CartContext';
-import { products } from '../data/products'; // Assuming products data is available
+import { products } from '../data/products'; 
 
 function VoiceAssistant() {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [response, setResponse] = useState('');
   const recognitionRef = useRef(null);
-  const { addToCart, showModal } = useCart();
+  const { addToCart, showModal } = useCart(); // Assuming addToCart and showModal are from context
 
   useEffect(() => {
-    // Check for Web Speech API compatibility
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const SpeechSynthesisUtterance = window.SpeechSynthesisUtterance;
     const speechSynthesis = window.speechSynthesis;
@@ -22,8 +21,8 @@ function VoiceAssistant() {
     }
 
     const recognition = new SpeechRecognition();
-    recognition.continuous = false; // Listen for a single phrase
-    recognition.interimResults = false; // Only return final results
+    recognition.continuous = false;
+    recognition.interimResults = false;
     recognition.lang = 'en-US';
 
     recognition.onstart = () => {
@@ -34,8 +33,9 @@ function VoiceAssistant() {
     recognition.onresult = (event) => {
       const currentTranscript = event.results[0][0].transcript;
       setTranscript(currentTranscript);
-      processCommand(currentTranscript);
       setIsListening(false);
+      // Process command with LLM
+      processCommandWithLLM(currentTranscript);
     };
 
     recognition.onerror = (event) => {
@@ -55,7 +55,7 @@ function VoiceAssistant() {
         recognitionRef.current.stop();
       }
     };
-  }, []); // Empty dependency array means this runs once on mount
+  }, []);
 
   const startListening = () => {
     if (recognitionRef.current) {
@@ -80,37 +80,87 @@ function VoiceAssistant() {
     window.speechSynthesis.speak(utterance);
   };
 
-  const processCommand = (command) => {
-    const lowerCommand = command.toLowerCase();
-    let assistantReply = "I'm sorry, I'm not sure how to help with that.";
+  // --- NEW FUNCTION: Process command using an LLM ---
+  const processCommandWithLLM = async (command) => {
+    setResponse("Thinking...");
+    speak("Thinking...");
 
-    if (lowerCommand.includes('hello') || lowerCommand.includes('hi')) {
-      assistantReply = "Hello! How can I help you with your order?";
-    } else if (lowerCommand.includes('add to cart')) {
-      const productNameMatch = products.find(p => lowerCommand.includes(p.name.toLowerCase()));
-      if (productNameMatch) {
-        addToCart(productNameMatch);
-        assistantReply = `${productNameMatch.name} added to your cart.`;
-      } else {
-        assistantReply = "Which item would you like to add to the cart?";
+    try {
+      let chatHistory = [];
+      // You can add context to the prompt for better responses
+      const prompt = `You are a helpful food delivery app assistant named JHUPTO.
+      User request: "${command}"
+
+      Based on the user's request, perform an action or provide a relevant response.
+      If the user asks to add an item to the cart, identify the item from the following list:
+      ${products.map(p => p.name).join(', ')}.
+      If an item is identified, respond with "ACTION: ADD_TO_CART: [item_name]".
+      If the user asks to show their cart, respond with "ACTION: SHOW_CART".
+      If the user asks to clear their cart, respond with "ACTION: CLEAR_CART".
+      Otherwise, provide a friendly and concise textual response.
+      `;
+
+      chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+      const payload = { contents: chatHistory };
+      const apiKey = ""; // Canvas will provide this at runtime. DO NOT put your actual key here.
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+      const apiResponse = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await apiResponse.json();
+
+      let llmTextResponse = "I couldn't get a clear response. Please try again.";
+      if (result.candidates && result.candidates.length > 0 &&
+          result.candidates[0].content && result.candidates[0].content.parts &&
+          result.candidates[0].content.parts.length > 0) {
+        llmTextResponse = result.candidates[0].content.parts[0].text;
       }
-    } else if (lowerCommand.includes('show my cart')) {
-      assistantReply = "I can show you your cart. Please go to the cart page.";
-    } else if (lowerCommand.includes('what are my options')) {
-      assistantReply = "You can ask me to add items to your cart, or tell me to show your cart.";
-    } else if (lowerCommand.includes('thank you') || lowerCommand.includes('thanks')) {
-      assistantReply = "You're welcome! Is there anything else?";
-    } else if (lowerCommand.includes('clear cart')) {
-      // Assuming you have a clearCart function in CartContext
-      // clearCart(); // Uncomment if you add clearCart to context and pass it here
-      assistantReply = "Your cart has been cleared. (This is a mock action)";
-    } else if (lowerCommand.includes('place order')) {
-      assistantReply = "To place your order, please proceed to the cart page and click 'Place Order'.";
-    }
 
-    setResponse(assistantReply);
-    speak(assistantReply);
+      // Check for specific actions from LLM response
+      if (llmTextResponse.startsWith("ACTION: ADD_TO_CART:")) {
+        const itemName = llmTextResponse.replace("ACTION: ADD_TO_CART:", "").trim();
+        const productToAdd = products.find(p => p.name.toLowerCase() === itemName.toLowerCase());
+        if (productToAdd) {
+          addToCart(productToAdd);
+          const reply = `${productToAdd.name} has been added to your cart.`;
+          setResponse(reply);
+          speak(reply);
+        } else {
+          const reply = `I found "${itemName}" but it's not in our product list.`;
+          setResponse(reply);
+          speak(reply);
+        }
+      } else if (llmTextResponse.startsWith("ACTION: SHOW_CART")) {
+        // In a real app, you'd navigate or show cart details
+        const reply = "Navigating you to the cart page now.";
+        setResponse(reply);
+        speak(reply);
+        // navigate('/cart'); // Uncomment if you import useNavigate and use it
+      } else if (llmTextResponse.startsWith("ACTION: CLEAR_CART")) {
+        // clearCart(); // Uncomment if you pass clearCart via context
+        const reply = "Your cart has been cleared. (Mock action)";
+        setResponse(reply);
+        speak(reply);
+      }
+      else {
+        // General conversational response from LLM
+        setResponse(llmTextResponse);
+        speak(llmTextResponse);
+      }
+
+    } catch (error) {
+      console.error("Error calling Gemini API:", error);
+      const errorMessage = "I'm having trouble connecting right now. Please try again later.";
+      setResponse(errorMessage);
+      speak(errorMessage);
+    }
   };
+  // --- END NEW FUNCTION ---
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 text-center max-w-lg mx-auto">
