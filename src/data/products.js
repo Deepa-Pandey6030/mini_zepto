@@ -61,7 +61,7 @@ export const products = [
     price: 3.25,
     category: 'Fruits & Vegetables',
     type: 'veg',
-    image: 'https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg?cs=srgb&dl=pexels-julia-nagy-568948-1327838.jpg&fm=jpg'
+    image: '/tomatoes.jpg' // Corrected local path
   },
   {
     id: 4,
@@ -111,7 +111,7 @@ export const products = [
     price: 4.99,
     category: 'Dairy & Bakery',
     type: 'veg',
-    image: 'https://www.daisybeet.com/wp-content/uploads/2024/01/Homemade-Greek-Yogurt-13.jpg'
+    image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=300&fit=crop&crop=center'
   },
   {
     id: 10,
@@ -127,7 +127,7 @@ export const products = [
     price: 5.50,
     category: 'Dairy & Bakery',
     type: 'veg',
-    image: 'https://sarahsvegankitchen.com/wp-content/uploads/2024/05/Vegan-Croissants-1.jpg'
+    image: '/croissants.jpg' // Corrected local path
   },
   {
     id: 12,
@@ -169,7 +169,7 @@ export const products = [
     price: 7.99,
     category: 'Ready to Eat',
     type: 'veg',
-    image: 'https://www.realsimple.com/thmb/z3cQCYXTyDQS9ddsqqlTVE8fnpc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/real-simple-mushroom-black-bean-burgers-recipe-0c365277d4294e6db2daa3353d6ff605.jpg'
+    image: 'https://images.unsplash.com/photo-1525059696034-4967a729002e?w=400&h=300&fit=crop&crop=center'
   },
   {
     id: 17,
@@ -195,7 +195,7 @@ export const products = [
     price: 3.99,
     category: 'Snacks & Beverages',
     type: 'veg',
-    image: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400&h=300&fit=crop&crop=center'
+    image: '/potatochips.jpg' // Corrected local path
   },
   {
     id: 20,
@@ -219,7 +219,7 @@ export const products = [
     price: 5.99,
     category: 'Snacks & Beverages',
     type: 'veg',
-    image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=300&fit=crop&crop=center'
+    image: '/cookies.jpg' // Corrected local path
   },
   {
     id: 23,
@@ -227,7 +227,7 @@ export const products = [
     price: 3.49,
     category: 'Snacks & Beverages',
     type: 'veg',
-    image: 'https://images.unsplash.com/photo-1622543925917-763c34d1a1a9?w=400&h=300&fit=crop&crop=center'
+    image: '/energydrink.jpg' // Corrected local path
   },
   {
     id: 24,
@@ -235,7 +235,7 @@ export const products = [
     price: 2.99,
     category: 'Snacks & Beverages',
     type: 'veg',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop&crop=center'
+    image: '/popcorn.jpg' // Corrected local path
   },
 
   // Electronics
@@ -245,7 +245,7 @@ export const products = [
     price: 19.99,
     category: 'Electronics',
     type: 'n/a',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2BmUSZMmPo1t7LciWPuWr0zG3BZE_xjmfg&s'
+    image: '/iphone charger.jpg' // Corrected local path
   },
   {
     id: 26,
@@ -261,7 +261,7 @@ export const products = [
     price: 9.99,
     category: 'Electronics',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop&crop=center'
+    image: '/usb cable.jpg' // Corrected local path
   },
   {
     id: 28,
@@ -269,7 +269,7 @@ export const products = [
     price: 24.99,
     category: 'Electronics',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1609592173003-c8359aba2097?w=400&h=300&fit=crop&crop=center'
+    image: '/powerbank.png' // Corrected local path
   },
   {
     id: 29,
@@ -277,7 +277,7 @@ export const products = [
     price: 14.99,
     category: 'Electronics',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400&h=300&fit=crop&crop=center'
+    image: '/phone case.jpg' // Corrected local path
   },
 
   // Personal Care
@@ -295,7 +295,7 @@ export const products = [
     price: 4.50,
     category: 'Personal Care',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=400&h=300&fit=crop&crop=center'
+    image: '/toothpaste.jpg' // Corrected local path
   },
   {
     id: 32,
@@ -303,7 +303,7 @@ export const products = [
     price: 3.25,
     category: 'Personal Care',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1584305574647-0cc949d2ca11?w=400&h=300&fit=crop&crop=center'
+    image: '/bodysoap.jpg' // Corrected local path
   },
   {
     id: 33,
@@ -311,7 +311,7 @@ export const products = [
     price: 6.99,
     category: 'Personal Care',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=300&fit=crop&crop=center'
+    image: '/facewash.jpg' // Corrected local path
   },
   {
     id: 34,
@@ -319,7 +319,7 @@ export const products = [
     price: 7.99,
     category: 'Personal Care',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1603100096361-2abf8bb1ccfc?w=400&h=300&fit=crop&crop=center'
+    image: '/deo.jpg' // Corrected local path
   },
 
   // Home & Kitchen
@@ -329,7 +329,7 @@ export const products = [
     price: 12.99,
     category: 'Home & Kitchen',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?w=400&h=300&fit=crop&crop=center'
+    image: '/coffeemug.jpg' // Corrected local path
   },
   {
     id: 36,
@@ -345,7 +345,7 @@ export const products = [
     price: 18.99,
     category: 'Home & Kitchen',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=300&fit=crop&crop=center'
+    image: '/cuttiingboard.jpg' // Corrected local path
   },
   {
     id: 38,
@@ -353,7 +353,7 @@ export const products = [
     price: 34.99,
     category: 'Home & Kitchen',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop&crop=center'
+    image: '/dinnerplates.jpeg' // Corrected local path
   },
   {
     id: 39,
@@ -361,7 +361,7 @@ export const products = [
     price: 22.99,
     category: 'Home & Kitchen',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1586627434499-c4e4439c1346?w=400&h=300&fit=crop&crop=center'
+    image: '/glass bowl set.jpg' // Corrected local path
   },
 
   // Cleaning Supplies
@@ -371,7 +371,7 @@ export const products = [
     price: 3.99,
     category: 'Cleaning Supplies',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=400&h=300&fit=crop&crop=center'
+    image: '/dishsoap.jpg' // Corrected local path
   },
   {
     id: 41,
@@ -379,7 +379,7 @@ export const products = [
     price: 6.99,
     category: 'Cleaning Supplies',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1585421514738-01798e348b17?w=400&h=300&fit=crop&crop=center'
+    image: '/floorcleaner.jpg' // Corrected local path
   },
   {
     id: 42,
@@ -387,7 +387,7 @@ export const products = [
     price: 8.99,
     category: 'Cleaning Supplies',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=400&h=300&fit=crop&crop=center'
+    image: '/papettowels.jpg' // Corrected local path
   },
   {
     id: 43,
@@ -395,7 +395,7 @@ export const products = [
     price: 12.99,
     category: 'Cleaning Supplies',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1585421514738-01798e348b17?w=400&h=300&fit=crop&crop=center'
+    image: '/toiletpaper.jpg' // Corrected local path
   },
   {
     id: 44,
@@ -403,6 +403,6 @@ export const products = [
     price: 5.99,
     category: 'Cleaning Supplies',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&crop=center'
+    image: '/allpurpose cleaner.jpg' // Corrected local path
   }
 ];
