@@ -1,5 +1,5 @@
 // src/pages/Home.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import CategoryCard from '../components/CategoryCard'; // Assuming these components exist
 import ProductCard from '../components/ProductCard'; // Assuming these components exist
 import { categories, products } from '../data/products'; // Assuming this data exists
