@@ -103,7 +103,7 @@ function Home() {
         {/* Hero Section */}
         <div className="text-center mb-12">
           <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-blue-700 to-purple-800 bg-clip-text text-transparent leading-tight"> {/* Updated text gradient */}
-            Welcome to JHUPTO
+            Welcome to NIMBUS
           </h1>
           <p className="text-lg md:text-xl text-gray-700 mb-8 max-w-2xl mx-auto"> {/* Darker gray for better contrast */}
             Your neighbourhood grocery store, delivered in minutes! Fresh produce, daily essentials, electronics and more.

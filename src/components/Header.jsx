@@ -32,17 +32,40 @@ function Header() {
 
   return (
     <header className="bg-white shadow-md py-4 px-6 flex flex-col md:flex-row justify-between items-center sticky top-0 z-50 rounded-b-lg">
-      <Link to="/" className="text-3xl font-bold text-primary mb-4 md:mb-0 hover:text-orange-600 transition-colors">
-        JHUPTO
-      </Link>
+      <Link
+  to="/"
+  className="text-3xl font-bold bg-gradient-to-r from-blue-700 to-purple-800 bg-clip-text text-transparent leading-tight mb-4 md:mb-0 hover:text-orange-600 transition-colors"
+>
+  NIMBUS
+</Link>
 
       <nav className="w-full md:w-auto">
         <ul className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2 text-lg items-center">
-          <li><Link to="/" className="text-gray-700 hover:text-primary">Home</Link></li>
-          <li><Link to="/recipe-suggester" className="text-gray-700 hover:text-primary">Recipes</Link></li>
-          <li><Link to="/group-purchase" className="text-gray-700 hover:text-primary">Group Buy</Link></li>
-          <li><Link to="/location" className="text-gray-700 hover:text-primary">Location</Link></li>
-          <li><Link to="/feedback" className="text-gray-700 hover:text-primary">Feedback</Link></li>
+          <li><Link to="/" className="relative py-1 text-lg 
+                    hover:text-violet-500 transition-colors duration-300 
+                    after:content-[''] after:absolute after:w-0 after:h-0.5 
+                    after:bg-violet-950 after:left-0 after:bottom-0 
+                    after:transition-all hover:after:w-full text-nowrap">Home</Link></li>
+          <li><Link to="/recipe-suggester" className="relative py-1 text-lg 
+                    hover:text-violet-500 transition-colors duration-300 
+                    after:content-[''] after:absolute after:w-0 after:h-0.5 
+                    after:bg-violet-950 after:left-0 after:bottom-0 
+                    after:transition-all hover:after:w-full text-nowrap">Recipes</Link></li>
+          <li><Link to="/group-purchase" className="relative py-1 text-lg 
+                    hover:text-violet-500 transition-colors duration-300 
+                    after:content-[''] after:absolute after:w-0 after:h-0.5 
+                    after:bg-violet-950 after:left-0 after:bottom-0 
+                    after:transition-all hover:after:w-full text-nowrap">Group Buy</Link></li>
+          <li><Link to="/location" className="relative py-1 text-lg 
+                    hover:text-violet-500 transition-colors duration-300 
+                    after:content-[''] after:absolute after:w-0 after:h-0.5 
+                    after:bg-violet-950 after:left-0 after:bottom-0 
+                    after:transition-all hover:after:w-full text-nowrap">Location</Link></li>
+          <li><Link to="/feedback" className="relative py-1 text-lg 
+                    hover:text-violet-500 transition-colors duration-300 
+                    after:content-[''] after:absolute after:w-0 after:h-0.5 
+                    after:bg-violet-950 after:left-0 after:bottom-0 
+                    after:transition-all hover:after:w-full text-nowrap">Feedback</Link></li>
 
           {user ? (
             <li className="relative">
