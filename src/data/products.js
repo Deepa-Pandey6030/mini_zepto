@@ -169,7 +169,7 @@ export const products = [
     price: 7.99,
     category: 'Ready to Eat',
     type: 'veg',
-    image: '/vegburger.jpg' // Corrected local path
+    image: 'https://images.unsplash.com/photo-1525059696034-4967a729002e?w=400&h=300&fit=crop&crop=center'
   },
   {
     id: 17,

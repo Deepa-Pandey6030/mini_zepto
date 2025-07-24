@@ -440,10 +440,10 @@ function Home() {
                   </div>
                 </div>
                 <div className="ml-3 text-gray-700 font-medium group-hover:text-green-600 transition-colors">
-                  <span className="hidden sm:inline">Show </span>Veg Only
+                  <span className="hidden sm:inline">Veg</span>
                 </div>
               </label>
-
+              
               {/* Clear Filters Button */}
               {(selectedCategory || vegOnly) && (
                 <button

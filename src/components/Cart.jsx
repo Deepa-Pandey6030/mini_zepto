@@ -1,13 +1,25 @@
 // src/components/Cart.jsx
 import React from 'react';
-import { useCart } from '../contexts/CartContext';
+import { useCart } from '../contexts/CartContext.jsx'; // Added .jsx extension
 import { useNavigate } from 'react-router-dom';
 
 function Cart() {
   const { cartItems, removeFromCart, updateQuantity, getTotalPrice, clearCart, showModal } = useCart();
   const navigate = useNavigate();
 
-   const handleDecrement = (itemId, currentQuantity) => {
+  const handlePlaceOrder = () => {
+    if (cartItems.length === 0) {
+      showModal("Your cart is empty!");
+      return;
+    }
+    // In a real app, this would involve sending order data to a backend
+    showModal('Order Placed Successfully!');
+    clearCart(); // Clear cart after placing order
+    navigate('/receipt'); // Navigate to receipt page
+  };
+
+  // Function to handle quantity decrement
+  const handleDecrement = (itemId, currentQuantity) => {
     if (currentQuantity > 1) {
       updateQuantity(itemId, currentQuantity - 1);
     } else {
@@ -19,26 +31,6 @@ function Cart() {
   // Function to handle quantity increment
   const handleIncrement = (itemId, currentQuantity) => {
     updateQuantity(itemId, currentQuantity + 1);
-  };
-  const handlePlaceOrder = () => {
-    if (cartItems.length === 0) {
-      showModal("Your cart is empty!");
-      return;
-    }
-
-    const generatedOrderId = `JHUPTO-${Math.random().toString(36).substring(2, 11).toUpperCase()}`;
-    const totalAmount = getTotalPrice();
-
-    // Instead of clearing cart and navigating to receipt, navigate to PaymentPage
-    showModal('Proceeding to payment...');
-    navigate('/payment', {
-      state: {
-        orderId: generatedOrderId,
-        amount: totalAmount,
-        // In a real app, you'd pass cartItems or their IDs for backend processing
-      }
-    });
-    // Cart will be cleared AFTER successful payment on PaymentPage
   };
 
   return (
@@ -73,20 +65,24 @@ function Cart() {
                     <p className="text-gray-600">${item.price.toFixed(2)} each</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <input
-                    type="number"
-                    min="1"
-                    value={item.quantity}
-                    onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
-                    className="w-20 text-center border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
+                <div className="flex items-center space-x-2"> {/* Adjusted spacing */}
+                  {/* Quantity Control with Plus/Minus Buttons */}
                   <button
-                    onClick={() => removeFromCart(item.id)}
-                    className="text-red-500 hover:text-red-700 font-semibold transition-colors duration-200 ease-in-out"
+                    onClick={() => handleDecrement(item.id, item.quantity)}
+                    className="bg-gray-200 text-gray-700 font-bold w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors duration-200"
                   >
-                    Remove
+                    -
                   </button>
+                  <span className="text-lg font-semibold text-gray-800 w-8 text-center">
+                    {item.quantity}
+                  </span>
+                  <button
+                    onClick={() => handleIncrement(item.id, item.quantity)}
+                    className="bg-blue-800 text-white font-bold w-8 h-8 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors duration-200"
+                  >
+                    +
+                  </button>
+                  {/* Removed the 'Remove' button */}
                 </div>
               </div>
             ))}
@@ -106,7 +102,7 @@ function Cart() {
                 onClick={handlePlaceOrder}
                 className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 ease-in-out shadow-md hover:shadow-lg transform hover:scale-105"
               >
-                Proceed to Payment
+                Place Order
               </button>
             </div>
           </div>

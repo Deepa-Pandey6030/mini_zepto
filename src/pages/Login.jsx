@@ -114,7 +114,7 @@ function Login() {
     if (isLogin) {
       // Simulate login
       const userData = {
-        name: 'John Doe', // This would come from API
+        name: 'Aarya Patil', // This would come from API
         email: formData.email,
         phone: '+1234567890',
         avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent('John Doe')}&background=f97316&color=fff&size=128`
