@@ -61,7 +61,7 @@ export const products = [
     price: 3.25,
     category: 'Fruits & Vegetables',
     type: 'veg',
-    image: 'https://images.unsplash.com/photo-1546470427-227c0c6b6cc4?w=400&h=300&fit=crop&crop=center'
+    image: 'https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg?cs=srgb&dl=pexels-julia-nagy-568948-1327838.jpg&fm=jpg'
   },
   {
     id: 4,
@@ -111,7 +111,7 @@ export const products = [
     price: 4.99,
     category: 'Dairy & Bakery',
     type: 'veg',
-    image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=300&fit=crop&crop=center'
+    image: 'https://www.daisybeet.com/wp-content/uploads/2024/01/Homemade-Greek-Yogurt-13.jpg'
   },
   {
     id: 10,
@@ -127,7 +127,7 @@ export const products = [
     price: 5.50,
     category: 'Dairy & Bakery',
     type: 'veg',
-    image: 'https://images.unsplash.com/photo-1555507036-ab794f77c2e4?w=400&h=300&fit=crop&crop=center'
+    image: 'https://sarahsvegankitchen.com/wp-content/uploads/2024/05/Vegan-Croissants-1.jpg'
   },
   {
     id: 12,
@@ -245,7 +245,7 @@ export const products = [
     price: 19.99,
     category: 'Electronics',
     type: 'n/a',
-    image: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=300&fit=crop&crop=center'
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2BmUSZMmPo1t7LciWPuWr0zG3BZE_xjmfg&s'
   },
   {
     id: 26,
