@@ -7,6 +7,19 @@ function Cart() {
   const { cartItems, removeFromCart, updateQuantity, getTotalPrice, clearCart, showModal } = useCart();
   const navigate = useNavigate();
 
+   const handleDecrement = (itemId, currentQuantity) => {
+    if (currentQuantity > 1) {
+      updateQuantity(itemId, currentQuantity - 1);
+    } else {
+      // If quantity is 1 and decremented, remove the item
+      removeFromCart(itemId);
+    }
+  };
+
+  // Function to handle quantity increment
+  const handleIncrement = (itemId, currentQuantity) => {
+    updateQuantity(itemId, currentQuantity + 1);
+  };
   const handlePlaceOrder = () => {
     if (cartItems.length === 0) {
       showModal("Your cart is empty!");

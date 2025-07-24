@@ -5,7 +5,7 @@
 /* Custom base styles */
 body {
   font-family: 'Inter', sans-serif;
-  @apply bg-gray-800 text-gray-900;
+  @apply bg-gray-500 text-gray-700;
 }
 
 /* Custom scrollbar for a cleaner look */
