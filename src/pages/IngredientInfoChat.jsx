@@ -46,7 +46,7 @@ function IngredientInfoChat() {
       currentCartInfo = "Current items in cart: " + cartItems.map(item => `${item.name} (Qty: ${item.quantity})`).join(', ') + ".";
     }
 
-    const prompt = `Your name is Petooram and You are an ingredient and nutrition information chatbot for JHUPTO food delivery app.
+    const prompt = `Your name is Petooram and You are an ingredient and nutrition information chatbot for NIMBUS food delivery app.
     Your primary goal is to provide helpful details about food items, especially those in the user's cart, and general food-related information.
     When answering general food or health-related questions, provide neutral, factual information and explicitly state that it is general knowledge, not personalized advice.
 
