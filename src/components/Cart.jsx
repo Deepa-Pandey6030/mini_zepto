@@ -7,38 +7,15 @@ function Cart() {
   const { cartItems, removeFromCart, updateQuantity, getTotalPrice, clearCart, showModal } = useCart();
   const navigate = useNavigate();
 
-   const handleDecrement = (itemId, currentQuantity) => {
-    if (currentQuantity > 1) {
-      updateQuantity(itemId, currentQuantity - 1);
-    } else {
-      // If quantity is 1 and decremented, remove the item
-      removeFromCart(itemId);
-    }
-  };
-
-  // Function to handle quantity increment
-  const handleIncrement = (itemId, currentQuantity) => {
-    updateQuantity(itemId, currentQuantity + 1);
-  };
   const handlePlaceOrder = () => {
     if (cartItems.length === 0) {
       showModal("Your cart is empty!");
       return;
     }
-
-    const generatedOrderId = `JHUPTO-${Math.random().toString(36).substring(2, 11).toUpperCase()}`;
-    const totalAmount = getTotalPrice();
-
-    // Instead of clearing cart and navigating to receipt, navigate to PaymentPage
-    showModal('Proceeding to payment...');
-    navigate('/payment', {
-      state: {
-        orderId: generatedOrderId,
-        amount: totalAmount,
-        // In a real app, you'd pass cartItems or their IDs for backend processing
-      }
-    });
-    // Cart will be cleared AFTER successful payment on PaymentPage
+    // In a real app, this would involve sending order data to a backend
+    showModal('Order Placed Successfully!');
+    clearCart(); // Clear cart after placing order
+    navigate('/receipt'); // Navigate to receipt page
   };
 
   // Function to handle quantity decrement
@@ -101,7 +78,7 @@ function Cart() {
                   </span>
                   <button
                     onClick={() => handleIncrement(item.id, item.quantity)}
-                    className="bg-blue-400 text-white font-bold w-8 h-8 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors duration-200"
+                    className="bg-blue-800 text-white font-bold w-8 h-8 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors duration-200"
                   >
                     +
                   </button>
@@ -125,7 +102,7 @@ function Cart() {
                 onClick={handlePlaceOrder}
                 className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 ease-in-out shadow-md hover:shadow-lg transform hover:scale-105"
               >
-                Proceed to Payment
+                Place Order
               </button>
             </div>
           </div>
