@@ -388,25 +388,26 @@ function Home() {
                   </div>
                 </div>
                 <div className="ml-3 text-gray-700 font-medium group-hover:text-green-600 transition-colors">
-                  <span className="hidden sm:inline">Show </span>Veg Only
+                  <span className="hidden sm:inline">Veg</span>
                 </div>
               </label>
               
               {/* Clear Filters Button */}
-              {(selectedCategory || vegOnly) && (
-                <button
-                  onClick={() => {
-                    setSelectedCategory(null);
-                    setVegOnly(false);
-                  }}
-                  className="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-full transition-colors duration-200 flex items-center space-x-1"
-                >
-                  <span>Clear Filters</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-                  </svg>
-                </button>
-              )}
+              {selectedCategory && (
+  <button
+    onClick={() => {
+      setSelectedCategory(null);
+      setVegOnly(false);
+    }}
+    className="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-full transition-colors duration-200 flex items-center space-x-1"
+  >
+    <span>Clear Filters</span>
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+)}
+
             </div>
           </div>
 
