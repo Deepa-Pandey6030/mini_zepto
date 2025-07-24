@@ -6,6 +6,16 @@ function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const [user, setUser] = useState(null);
+  const [showCredentials, setShowCredentials] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editData, setEditData] = useState({
+    name: '',
+    email: '',
+    phone: ''
+  });
+  const [editErrors, setEditErrors] = useState({});
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,6 +29,12 @@ function Login() {
   // Mount animation
   useEffect(() => {
     setMounted(true);
+    // Check if user is already logged in
+    const userData = localStorage.getItem('jhupto-user');
+    if (userData) {
+      setUser(JSON.parse(userData));
+      setShowProfile(true);
+    }
   }, []);
 
   const handleInputChange = (e) => {
@@ -68,6 +84,23 @@ function Login() {
     return Object.keys(newErrors).length === 0;
   };
 
+  const smoothTransitionToLogin = () => {
+    // First, clear the form
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      password: '',
+      confirmPassword: ''
+    });
+    setErrors({});
+    
+    // Then transition to login with a smooth animation
+    setTimeout(() => {
+      setIsLogin(true);
+    }, 300);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -83,23 +116,35 @@ function Login() {
       const userData = {
         name: 'John Doe', // This would come from API
         email: formData.email,
-        phone: '+1234567890'
+        phone: '+1234567890',
+        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent('John Doe')}&background=f97316&color=fff&size=128`
       };
       localStorage.setItem('jhupto-user', JSON.stringify(userData));
+      setUser(userData);
+      setShowProfile(true);
+      
+      // Success message
       alert('Login successful!');
     } else {
       // Simulate signup
       const userData = {
         name: formData.name,
         email: formData.email,
-        phone: formData.phone
+        phone: formData.phone,
+        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(formData.name)}&background=f97316&color=fff&size=128`
       };
       localStorage.setItem('jhupto-user', JSON.stringify(userData));
-      alert('Account created successfully!');
+      
+      // Success message
+      alert('Account created successfully! Please login with your credentials.');
+      
+      // Smooth transition to login
+      setIsLoading(false);
+      smoothTransitionToLogin();
+      return;
     }
 
     setIsLoading(false);
-    navigate('/');
   };
 
   const toggleMode = () => {
@@ -113,6 +158,356 @@ function Login() {
     });
     setErrors({});
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('jhupto-user');
+    setUser(null);
+    setShowProfile(false);
+    setShowCredentials(false);
+    setIsEditing(false);
+    setEditData({ name: '', email: '', phone: '' });
+    setEditErrors({});
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      password: '',
+      confirmPassword: ''
+    });
+    setErrors({});
+  };
+
+  const handleEditProfile = () => {
+    setEditData({
+      name: user.name,
+      email: user.email,
+      phone: user.phone
+    });
+    setEditErrors({});
+    setIsEditing(true);
+    setShowCredentials(false);
+  };
+
+  const handleEditInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    // Clear error when user starts typing
+    if (editErrors[name]) {
+      setEditErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const validateEditForm = () => {
+    const newErrors = {};
+
+    if (!editData.name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+
+    if (!editData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(editData.email)) {
+      newErrors.email = 'Email is invalid';
+    }
+
+    if (!editData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    }
+
+    setEditErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSaveProfile = async () => {
+    if (!validateEditForm()) return;
+
+    setIsLoading(true);
+
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const updatedUser = {
+      ...user,
+      name: editData.name,
+      email: editData.email,
+      phone: editData.phone
+    };
+
+    localStorage.setItem('jhupto-user', JSON.stringify(updatedUser));
+    setUser(updatedUser);
+    setIsEditing(false);
+    setIsLoading(false);
+    
+    alert('Profile updated successfully!');
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditData({ name: '', email: '', phone: '' });
+    setEditErrors({});
+  };
+
+  const generateInitials = (name) => {
+    return name
+      .split(' ')
+      .map(word => word[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  // If user is logged in, show profile view
+  if (showProfile && user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 flex items-center justify-center p-4">
+        {/* Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-10 left-10 w-32 h-32 bg-orange-200 rounded-full opacity-20 animate-pulse"></div>
+          <div className="absolute top-1/3 right-20 w-24 h-24 bg-pink-200 rounded-full opacity-30 animate-bounce"></div>
+          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-purple-200 rounded-full opacity-10 animate-pulse"></div>
+          <div className="absolute bottom-10 right-10 w-20 h-20 bg-blue-200 rounded-full opacity-25 animate-ping"></div>
+        </div>
+
+        {/* Profile Container */}
+        <div className="relative w-full max-w-md transform transition-all duration-1000 ease-out">
+          
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent mb-2">
+              JHUPTO
+            </h1>
+            <p className="text-gray-600 text-lg">Welcome back, {user.name}!</p>
+          </div>
+
+          {/* Profile Card */}
+          <div className="bg-white rounded-2xl shadow-2xl border border-orange-100 overflow-hidden">
+            
+            {/* Profile Header */}
+            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-6 text-center">
+              <div className="relative inline-block">
+                <div 
+                  className="w-24 h-24 bg-white rounded-full flex items-center justify-center text-2xl font-bold text-orange-500 cursor-pointer hover:scale-105 transition-transform duration-300 shadow-lg"
+                  onClick={() => setShowCredentials(!showCredentials)}
+                >
+                  {generateInitials(user.name)}
+                </div>
+                <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
+              </div>
+              <h3 className="text-white text-xl font-semibold mt-3">{user.name}</h3>
+              <p className="text-orange-100 text-sm">Click profile to view details</p>
+            </div>
+
+            {/* Credentials Panel */}
+            <div className={`transition-all duration-500 ease-in-out overflow-hidden ${
+              showCredentials ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+            }`}>
+              <div className="p-6 bg-gray-50 border-t">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-lg font-semibold text-gray-800 flex items-center">
+                    <span className="mr-2">👤</span>
+                    Account Information
+                  </h4>
+                  <button
+                    onClick={handleEditProfile}
+                    className="text-orange-500 hover:text-orange-600 text-sm font-medium transition-colors duration-200"
+                  >
+                    Edit Profile
+                  </button>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="flex items-center p-3 bg-white rounded-lg border">
+                    <span className="text-gray-400 text-lg mr-3">📧</span>
+                    <div>
+                      <p className="text-sm text-gray-500">Email</p>
+                      <p className="font-medium text-gray-800">{user.email}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center p-3 bg-white rounded-lg border">
+                    <span className="text-gray-400 text-lg mr-3">📱</span>
+                    <div>
+                      <p className="text-sm text-gray-500">Phone</p>
+                      <p className="font-medium text-gray-800">{user.phone}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center p-3 bg-white rounded-lg border">
+                    <span className="text-gray-400 text-lg mr-3">🏷️</span>
+                    <div>
+                      <p className="text-sm text-gray-500">Full Name</p>
+                      <p className="font-medium text-gray-800">{user.name}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Edit Profile Panel */}
+            <div className={`transition-all duration-500 ease-in-out overflow-hidden ${
+              isEditing ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
+            }`}>
+              <div className="p-6 bg-orange-50 border-t">
+                <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                  <span className="mr-2">✏️</span>
+                  Edit Profile
+                </h4>
+                
+                <div className="space-y-4">
+                  {/* Edit Name Field */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Full Name
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        name="name"
+                        value={editData.name}
+                        onChange={handleEditInputChange}
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-all duration-300 ${
+                          editErrors.name 
+                            ? 'border-red-300 focus:border-red-500' 
+                            : 'border-gray-200 focus:border-orange-500'
+                        }`}
+                        placeholder="Enter your full name"
+                      />
+                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                        <span className="text-gray-400 text-xl">👤</span>
+                      </div>
+                    </div>
+                    {editErrors.name && (
+                      <p className="text-red-500 text-sm mt-1 animate-[shake_0.5s_ease-in-out]">{editErrors.name}</p>
+                    )}
+                  </div>
+
+                  {/* Edit Email Field */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Email Address
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="email"
+                        name="email"
+                        value={editData.email}
+                        onChange={handleEditInputChange}
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-all duration-300 ${
+                          editErrors.email 
+                            ? 'border-red-300 focus:border-red-500' 
+                            : 'border-gray-200 focus:border-orange-500'
+                        }`}
+                        placeholder="Enter your email"
+                      />
+                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                        <span className="text-gray-400 text-xl">📧</span>
+                      </div>
+                    </div>
+                    {editErrors.email && (
+                      <p className="text-red-500 text-sm mt-1 animate-[shake_0.5s_ease-in-out]">{editErrors.email}</p>
+                    )}
+                  </div>
+
+                  {/* Edit Phone Field */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Phone Number
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={editData.phone}
+                        onChange={handleEditInputChange}
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-all duration-300 ${
+                          editErrors.phone 
+                            ? 'border-red-300 focus:border-red-500' 
+                            : 'border-gray-200 focus:border-orange-500'
+                        }`}
+                        placeholder="Enter your phone number"
+                      />
+                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                        <span className="text-gray-400 text-xl">📱</span>
+                      </div>
+                    </div>
+                    {editErrors.phone && (
+                      <p className="text-red-500 text-sm mt-1 animate-[shake_0.5s_ease-in-out]">{editErrors.phone}</p>
+                    )}
+                  </div>
+
+                  {/* Edit Action Buttons */}
+                  <div className="flex space-x-3 pt-4">
+                    <button
+                      onClick={handleSaveProfile}
+                      disabled={isLoading}
+                      className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 relative overflow-hidden"
+                    >
+                      <span className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+                        Save Changes
+                      </span>
+                      
+                      {/* Loading Spinner */}
+                      {isLoading && (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        </div>
+                      )}
+                    </button>
+                    
+                    <button
+                      onClick={handleCancelEdit}
+                      disabled={isLoading}
+                      className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 rounded-xl transition-all duration-300 border border-gray-200 disabled:opacity-50"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className={`p-6 space-y-3 transition-all duration-300 ${isEditing ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
+              <button
+                onClick={() => navigate('/')}
+                disabled={isEditing}
+                className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-3 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:hover:scale-100"
+              >
+                Go to Dashboard
+              </button>
+              
+              <button
+                onClick={handleLogout}
+                disabled={isEditing}
+                className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 rounded-xl transition-all duration-300 border border-gray-200 disabled:opacity-50"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+
+          {/* Back to Home */}
+          <div className="text-center mt-6">
+            <button
+              onClick={() => navigate('/')}
+              className="text-orange-500 hover:text-orange-600 transition-colors duration-200 flex items-center justify-center space-x-2"
+            >
+              <span>←</span>
+              <span>Back to Home</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 flex items-center justify-center p-4">
