@@ -13,7 +13,7 @@ function Petooram() {
         className="fixed bottom-6 right-6 z-50 bg-gradient-to-br from-purple-600 to-indigo-700 text-white
                    p-4 rounded-full shadow-xl flex flex-col items-center justify-center space-y-1
                    transition-transform duration-300 ease-in-out hover:scale-105 hover:-translate-y-2
-                   cursor-pointer border-4 border-white ring-2 ring-purple-300 "
+                   cursor-pointer border-4 border-white ring-2 ring-purple-300 animate-bounce"
         onClick={toggleChat}
       >
         {/* Image */}
@@ -29,9 +29,12 @@ function Petooram() {
         />
 
         {/* Label */}
-        <p className="font-bold text-xs md:text-sm text-center drop-shadow-lg group-hover:text-yellow-200 transition-colors">
-          Petooram
-        </p>
+        <p className="font-extrabold text-xs md:text-sm lg:text-base /* Smaller text for vertical layout */
+              whitespace-nowrap /* Keep on one line */
+              text-shadow-md drop-shadow-lg /* Stronger text shadow for pop */
+              group-hover:text-yellow-200 transition-colors duration-300">
+  PetuRam
+</p>
 
         {/* Chat Icon */}
         <svg

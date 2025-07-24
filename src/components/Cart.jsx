@@ -12,10 +12,20 @@ function Cart() {
       showModal("Your cart is empty!");
       return;
     }
-    // In a real app, this would involve sending order data to a backend
-    showModal('Order Placed Successfully!');
-    clearCart(); // Clear cart after placing order
-    navigate('/receipt'); // Navigate to receipt page
+
+    const generatedOrderId = `JHUPTO-${Math.random().toString(36).substring(2, 11).toUpperCase()}`;
+    const totalAmount = getTotalPrice();
+
+    // Instead of clearing cart and navigating to receipt, navigate to PaymentPage
+    showModal('Proceeding to payment...');
+    navigate('/payment', {
+      state: {
+        orderId: generatedOrderId,
+        amount: totalAmount,
+        // In a real app, you'd pass cartItems or their IDs for backend processing
+      }
+    });
+    // Cart will be cleared AFTER successful payment on PaymentPage
   };
 
   return (
@@ -83,7 +93,7 @@ function Cart() {
                 onClick={handlePlaceOrder}
                 className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 ease-in-out shadow-md hover:shadow-lg transform hover:scale-105"
               >
-                Place Order
+                Proceed to Payment
               </button>
             </div>
           </div>

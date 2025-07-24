@@ -11,8 +11,9 @@ import Feedback from './pages/Feedback';
 import RecipeSuggester from './pages/RecipeSuggester';
 import GroupPurchase from './pages/GroupPurchase';
 import Location from './pages/Location';
-import IngredientInfoChat from './pages/IngredientInfoChat'; // No longer needed here as a direct page
-import Petooram from './components/petooram'; // Petooram now handles the chat
+import DeliveryTracker from './pages/DeliveryTracker';
+import PaymentPage from './pages/PaymentPage'; // Import the new component
+import Petooram from './components/petooram';
 import { useCart } from './contexts/CartContext';
 
 function App() {
@@ -27,17 +28,18 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/payment" element={<PaymentPage />} /> {/* New Route */}
             <Route path="/receipt" element={<Receipt />} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/recipe-suggester" element={<RecipeSuggester />} />
             <Route path="/group-purchase" element={<GroupPurchase />} />
             <Route path="/location" element={<Location />} />
-            <Route path="/ingredient-chat" element={<IngredientInfoChat />} />   
+            <Route path="/track-delivery" element={<DeliveryTracker />} />
             {/* Add more routes here as needed */}
           </Routes>
         </main>
         <Footer />
-        <Petooram /> {/* Petooram will now manage and display the chat */}
+        <Petooram />
       </div>
     </Router>
   );
