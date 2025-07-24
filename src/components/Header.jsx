@@ -34,9 +34,8 @@ function Header() {
     <header className="bg-white shadow-md py-4 px-6 flex flex-col md:flex-row justify-between items-center sticky top-0 z-50 rounded-b-lg">
       <Link
   to="/"
-  className="text-3xl font-bold bg-gradient-to-r from-blue-700 to-purple-800 bg-clip-text text-transparent leading-tight mb-4 md:mb-0 hover:text-orange-600 transition-colors"
->
-  NIMBUS
+  className="text-3xl font-bold bg-gradient-to-r from-blue-700 to-purple-800 bg-clip-text text-transparent leading-tight mb-4 md:mb-0 hover:text-orange-600 transition-colors">
+  <img className="md:w-16 w-10" src="logo.png" alt="" />
 </Link>
 
       <nav className="w-full md:w-auto">
