@@ -22,7 +22,7 @@ function Receipt() {
       // navigate('/cart', { replace: true }); // Uncomment to force redirect if no valid state
     }
 
-    const orderIdToUse = passedOrderId || `NIMBUS-DUMMY-${Math.random().toString(36).substring(2, 11).toUpperCase()}`;
+    const orderIdToUse = passedOrderId || `JHUPTO-DUMMY-${Math.random().toString(36).substring(2, 11).toUpperCase()}`;
     const date = new Date().toLocaleDateString('en-US', {
       year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
     });
@@ -79,7 +79,7 @@ function Receipt() {
     <div className="container mx-auto p-4 flex justify-center">
       <div className="bg-white rounded-xl shadow-2xl p-6 md:p-10 w-full max-w-3xl border border-gray-100">
         <h2 className="text-5xl font-extrabold text-center mb-6 text-green-600">Order Confirmed!</h2>
-        <p className="text-center text-gray-700 text-lg mb-8">Thank you for your purchase from NIMBUS!</p>
+        <p className="text-center text-gray-700 text-lg mb-8">Thank you for your purchase from JHUPTO!</p>
 
         {/* Order Details Summary */}
         <div className="border-t border-b border-gray-200 py-6 mb-8">
